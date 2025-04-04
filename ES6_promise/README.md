@@ -1,8 +1,6 @@
 # ES6 Promises
 
 > Learn how to handle asynchronous JavaScript operations using Promises, async/await, and error handling mechanisms.  
-> **By Johann Kerbrat, Engineering Manager at Uber Works**
-
 ---
 
 ## 📚 Description
