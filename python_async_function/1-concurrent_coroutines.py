@@ -3,9 +3,9 @@
 This module contains an async function that executes multiple coroutines
 concurrently and returns the delays in ascending order.
 """
-
-import asyncio
 from typing import List
+import asyncio
+wait_random = __import__('0-basic_async_syntax').wait_random
 
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
