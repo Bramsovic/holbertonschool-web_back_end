@@ -4,7 +4,6 @@ from typing import List
 index_range = __import__('0-simple_helper_function').index_range
 
 
-
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -42,6 +41,3 @@ class Server:
         data = self.dataset()
 
         return data[start:end]
-        
-
-
