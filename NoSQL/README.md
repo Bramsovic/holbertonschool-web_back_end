@@ -199,8 +199,6 @@ Methods:
 ## 👥 Contributors
 
 - 💻 Project by Holberton School students  
-- ✍️ Maintainer: *[Your Name]*
-
 ---
 
 ## 📝 License
