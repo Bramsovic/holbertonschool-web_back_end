@@ -22,9 +22,6 @@ function countStudents(path) {
       }
 
       return result;
-    })
-    .catch(() => {
-      throw new Error('Cannot load the database');
     });
 }
 
@@ -41,7 +38,7 @@ const app = http.createServer((req, res) => {
         res.end(`This is the list of our students\n${data}`);
       })
       .catch(() => {
-        res.end('Cannot load the database');
+        res.end('This is the list of our students\nCannot load the database');
       });
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
