@@ -27,12 +27,10 @@ function countStudents(path) {
     });
 }
 
-// Route /
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
-// Route /students
 app.get('/students', (req, res) => {
   const path = process.argv[2];
 
@@ -43,7 +41,7 @@ app.get('/students', (req, res) => {
     })
     .catch(() => {
       res.set('Content-Type', 'text/plain');
-      res.status(500).send('Cannot load the database');
+      res.send('This is the list of our students\nCannot load the database');
     });
 });
 
