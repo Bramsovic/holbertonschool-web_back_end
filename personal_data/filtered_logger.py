@@ -61,9 +61,31 @@ def get_db() -> object:
     )
 
 
+def main() -> None:
+    """Read users from the database and log each row with redaction."""
+    db = get_db()
+    cursor = db.cursor()
+    logger = get_logger()
+    try:
+        cursor.execute("SELECT * FROM users;")
+        for row in cursor:
+            message = "; ".join(
+                f"{field}={value}"
+                for field, value in zip(cursor.column_names, row)
+            ) + ";"
+            logger.info(message)
+    finally:
+        cursor.close()
+        db.close()
+
+
 try:
     get_db.__annotations__["return"] = __import__(
         "mysql.connector.connection", fromlist=["MySQLConnection"]
     ).MySQLConnection
 except ModuleNotFoundError:
     pass
+
+
+if __name__ == "__main__":
+    main()
