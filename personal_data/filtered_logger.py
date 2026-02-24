@@ -2,6 +2,7 @@
 """Utilities for redacting sensitive fields from log messages."""
 
 import logging
+import os
 import re
 from typing import List
 
@@ -46,3 +47,15 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
     logger.handlers = [handler]
     return logger
+
+
+def get_db() -> "mysql.connector.connection.MySQLConnection":
+    """Return a MySQL connection using credentials from the environment."""
+    import mysql.connector
+
+    return mysql.connector.connect(
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        database=os.getenv("PERSONAL_DATA_DB_NAME"),
+    )
