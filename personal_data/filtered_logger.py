@@ -6,11 +6,6 @@ import os
 import re
 from typing import List
 
-try:
-    from mysql.connector.connection import MySQLConnection
-except ModuleNotFoundError:
-    MySQLConnection = object
-
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
@@ -54,7 +49,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> MySQLConnection:
+def get_db() -> object:
     """Return a MySQL connection using credentials from the environment."""
     import mysql.connector
 
@@ -64,3 +59,11 @@ def get_db() -> MySQLConnection:
         password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
         database=os.getenv("PERSONAL_DATA_DB_NAME"),
     )
+
+
+try:
+    get_db.__annotations__["return"] = __import__(
+        "mysql.connector.connection", fromlist=["MySQLConnection"]
+    ).MySQLConnection
+except ModuleNotFoundError:
+    pass
