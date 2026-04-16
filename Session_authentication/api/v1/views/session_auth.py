@@ -2,7 +2,7 @@
 """Session authentication views."""
 from os import getenv
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import abort, jsonify, request
 from models.user import User
 
 
@@ -31,3 +31,14 @@ def login() -> str:
     response = jsonify(user.to_json())
     response.set_cookie(getenv("SESSION_NAME"), session_id)
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout() -> str:
+    """Delete the current session."""
+    from api.v1.app import auth
+
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({}), 200
