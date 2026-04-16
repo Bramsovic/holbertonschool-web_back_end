@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Define the base authentication class used by the API."""
+from os import getenv
 from typing import List, TypeVar
 from flask import request
 
@@ -36,3 +37,9 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """Return the current user resolved from a Flask request."""
         return None
+
+    def session_cookie(self, request=None):
+        """Return the session cookie value from a Flask request."""
+        if request is None:
+            return None
+        return request.cookies.get(getenv("SESSION_NAME"))
