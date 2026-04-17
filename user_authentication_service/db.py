@@ -35,3 +35,14 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """Find the first user matching the provided attributes."""
         return self._session.query(User).filter_by(**kwargs).one()
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update a user's attributes."""
+        user = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if key not in User.__table__.columns:
+                raise ValueError
+            setattr(user, key, value)
+
+        self._session.commit()
