@@ -1,13 +1,24 @@
 #!/usr/bin/env python3
 """This module provides a Redis-backed cache for storing simple values."""
+from functools import wraps
 import uuid
-from typing import Callable, Optional, Union
+from typing import Any, Callable, Optional, Union
 
 import redis
 
 
 DataType = Union[str, bytes, int, float]
 ReturnType = Union[str, bytes, int, float]
+
+
+def count_calls(method: Callable[..., Any]) -> Callable[..., Any]:
+    """Decorate a Cache method to count how many times it is called."""
+    @wraps(method)
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
+        """Increment the method call count and return the method result."""
+        self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache:
@@ -18,6 +29,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: DataType) -> str:
         """Store data in Redis using a random key and return that key."""
         key = str(uuid.uuid4())
