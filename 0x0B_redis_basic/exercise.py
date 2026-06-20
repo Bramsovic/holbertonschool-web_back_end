@@ -36,6 +36,28 @@ def call_history(method: Callable[..., Any]) -> Callable[..., Any]:
     return wrapper
 
 
+def replay(method: Callable[..., Any]) -> None:
+    """Display the call history for a decorated Cache method."""
+    redis_client = method.__self__._redis
+    name = method.__qualname__
+    input_key = "{}:inputs".format(name)
+    output_key = "{}:outputs".format(name)
+
+    count = redis_client.get(name)
+    count = int(count) if count is not None else 0
+    print("{} was called {} times:".format(name, count))
+
+    inputs = redis_client.lrange(input_key, 0, -1)
+    outputs = redis_client.lrange(output_key, 0, -1)
+
+    for args, output in zip(inputs, outputs):
+        print("{}(*{}) -> {}".format(
+            name,
+            args.decode("utf-8"),
+            output.decode("utf-8")
+        ))
+
+
 class Cache:
     """Cache stores supported Python values in Redis under random keys."""
 
