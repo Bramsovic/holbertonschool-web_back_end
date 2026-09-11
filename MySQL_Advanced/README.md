@@ -29,6 +29,15 @@ At the end of this project, I should be able to explain:
 | File | Description |
 | --- | --- |
 | `0-uniq_users.sql` | Creates a `users` table with a unique email constraint |
+| `1-country_users.sql` | Creates a `users` table with a country enumeration |
+| `2-fans.sql` | Ranks band origins by total number of fans |
+| `3-glam_rock.sql` | Lists Glam rock bands ranked by lifespan |
+| `4-store.sql` | Creates a trigger to decrease item quantity after an order |
+| `5-valid_email.sql` | Creates a trigger to reset email validation when email changes |
+| `6-bonus.sql` | Creates a stored procedure to add bonus corrections |
+| `7-average_score.sql` | Creates a stored procedure to compute a user's average score |
+| `8-index_my_names.sql` | Creates an index on the first letter of names |
+| `9-index_name_score.sql` | Creates an index on the first letter of names and score |
 
 ## Usage
 
