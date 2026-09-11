@@ -38,6 +38,8 @@ At the end of this project, I should be able to explain:
 | `7-average_score.sql` | Creates a stored procedure to compute a user's average score |
 | `8-index_my_names.sql` | Creates an index on the first letter of names |
 | `9-index_name_score.sql` | Creates an index on the first letter of names and score |
+| `10-div.sql` | Creates a function that divides two numbers safely |
+| `11-need_meeting.sql` | Creates a view of students who need a meeting |
 
 ## Usage
 
